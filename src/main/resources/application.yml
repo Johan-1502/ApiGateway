@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: login_route
+          uri: lb://login-microservice
+          predicates:
+            - Path=/login/**, /login-microservice/login/**
+        - id: employee_route
+          uri: lb://employee
+          predicates:
+            - Path=/employee/**
+        - id: access_route
+          uri: lb://access
+          predicates:
+            - Path=/access/**
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins:
+              - "http://localhost:4200"
+              - "http://127.0.0.1:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+jwt:
+ secret: "MiClaveSecretaSuperLargaParaJWT1234567890"
