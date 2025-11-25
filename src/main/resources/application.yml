@@ -33,6 +33,7 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
+            allowCredentials: true
 eureka:
   client:
     service-url:
